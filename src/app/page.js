@@ -1,12 +1,10 @@
 import React from 'react'
+import Dashboard from './component/ui/Dashboard'
 import { HomePage } from './component/HomePage'
-
-import { SidebarDemo } from './component/Sidebar'
-import { InvestmentForm } from './component/Form'
 function page() {
   return (
     <>
-      <InvestmentForm />
+      <HomePage />
     </>
   )
 }
