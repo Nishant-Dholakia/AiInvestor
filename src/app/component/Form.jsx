@@ -4,45 +4,42 @@ import { motion } from "framer-motion";
 import { Label } from "./ui/Lable";
 import { Input } from "./ui/Input";
 import { cn } from "@/app/lib/utils";
+import { AdviceCard } from "./AdviceCard";
 
 export function InvestmentForm() {
   const [formData, setFormData] = useState({
-    returnData: "",
-    sharpe: "",
-    drawdown: "",
-    beta: "",
-    exposure: "",
-    winLoss: "",
-    riskReward: "",
-    holdingPeriod: "",
-    fomo: "",
-    panic: "",
+    returnData: "5",
+    sharpe: "5",
+    drawdown: "5",
+    beta: "5",
+    exposure: "5",
+    winLoss: "5",
+    riskReward: "5",
+    holdingPeriod: "5",
+    fomo: "5",
+    panic: "5",
   });
-  const handleClick = () => {
-    const formData = {
-      returnData: 12.5,
-      sharpe: 0.8,
-      drawdown: 30,
-      beta: 1.2,
-      exposure: 20,
-      winLoss: 1.2,
-      riskReward: 1.5,
-      holdingPeriod: 90,
-      fomo: 15,
-      panic: 20
-    };
+  let [apiData,setApiData] = useState([])
+  const handleClick = async () => {
+    console.log('calling api')
   
-    fetch('http://localhost:3000/api/advisor', {
+    await fetch('http://localhost:3000/api/advisor', {
       method: 'POST',
       body: JSON.stringify(formData),  // Make sure this is stringified JSON
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'  // Proper header for JSON
       }
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(err => console.error("Error:", err));  // Error handling
+    .then(res => res.json())
+    .then(data => setApiData(Array.isArray(data) ? data : []))
+    .catch(error => console.error("Fetch error:", error));
   };
+
+  const handleClickDemo = ()=> {
+    handleClick()
+
+  }
+  // console.log('got data',apiData)
   
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -93,12 +90,22 @@ export function InvestmentForm() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-full md:col-span-2 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md transition-all duration-300"
-          onClick={handleClick}
+          onClick={handleClickDemo}
           type="submit"
         >
           Analyze Portfolio →
         </motion.button>
       </form>
+      {
+        apiData.length > 0 ? 
+        <div className="flex flex-col gap-4 w-[100%]">
+      {apiData.map((advice,index) => (
+        <AdviceCard key = {index+1} index={index + 1} metric={advice.metric} advice={advice.advice} />
+      ))}
+      </div>
+      : null
+    }
+
     </motion.div>
   );
 }
