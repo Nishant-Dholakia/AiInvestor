@@ -1,12 +1,9 @@
+import { InvestmentForm } from '@/app/component/Form'
 import React from 'react'
-import { SidebarDemo } from '../component/Sidebar'
-
 
 const page = () => {
   return (
-    <>
-      
-    </>
+    <InvestmentForm />
   )
 }
 

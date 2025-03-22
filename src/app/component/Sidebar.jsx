@@ -16,7 +16,7 @@ export function SidebarDemo() {
   const links = [
     {
       label: "Dashboard",
-      href: "#",
+      href: "/",
       icon: (
         <IconBrandTabler className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
@@ -29,19 +29,19 @@ export function SidebarDemo() {
       ),
     },
     {
-      label: "Settings",
-      href: "#",
+      label: "AiInvest",
+      href: "/dashboard/aiInvest",
       icon: (
         <IconSettings className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
-    {
-      label: "Logout",
-      href: "#",
-      icon: (
-        <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
+    // {
+    //   label: "Logout",
+    //   href: "/logout",
+    //   icon: (
+    //     <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+    //   ),
+    // },
   ];
   const [open, setOpen] = useState(false);
   return (
@@ -61,6 +61,7 @@ export function SidebarDemo() {
                 <SidebarLink key={idx} link={link} />
               ))}
             </div>
+            
           </div>
           <div>
             <SidebarLink
