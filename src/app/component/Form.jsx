@@ -18,17 +18,32 @@ export function InvestmentForm() {
     fomo: "",
     panic: "",
   });
-  const handleClick= ()=>{
+  const handleClick = () => {
+    const formData = {
+      returnData: 12.5,
+      sharpe: 0.8,
+      drawdown: 30,
+      beta: 1.2,
+      exposure: 20,
+      winLoss: 1.2,
+      riskReward: 1.5,
+      holdingPeriod: 90,
+      fomo: 15,
+      panic: 20
+    };
+  
     fetch('http://localhost:3000/api/advisor', {
       method: 'POST',
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData),  // Make sure this is stringified JSON
       headers: {
-        'Content-type': 'application/json; charset=UTF-8'
+        'Content-Type': 'application/json; charset=UTF-8'  // Proper header for JSON
       }
     })
     .then(response => response.json())
-    .then(data => console.log(data));
-  }
+    .then(data => console.log(data))
+    .catch(err => console.error("Error:", err));  // Error handling
+  };
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

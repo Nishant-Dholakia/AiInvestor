@@ -5,7 +5,12 @@ const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 
 export async function POST(req) {
-    const body = await req.json();  // Extract JSON body data
+    const rawBody = await req.text();
+    console.log("Raw Request Body:", rawBody);
+
+    // Convert form-urlencoded string to a JavaScript object
+    const params = new URLSearchParams(rawBody);
+    const body = Object.fromEntries(params.entries());  
     const { returnData, sharpe, drawdown, beta, exposure, winLoss,  riskReward, holdingPeriod, fomo, panic } = body;
 
     const prompt = `
