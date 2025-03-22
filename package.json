@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.12.8",
+    "@google/generative-ai": "^0.24.0",
+    "@radix-ui/react-label": "^2.1.2",
     "@tabler/icons-react": "^3.31.0",
     "clsx": "^2.1.1",
     "cobe": "^0.6.3",
@@ -16,15 +19,7 @@
     "next": "15.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.0.2",
-    "@clerk/nextjs": "^6.12.8",
-    "@radix-ui/react-label": "^2.1.2",
-    "@tabler/icons-react": "^3.31.0",
-    "clsx": "^2.1.1",
-    "motion": "^12.5.0",
-    "next": "15.2.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
