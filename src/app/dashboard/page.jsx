@@ -1,8 +1,10 @@
 import React from 'react'
+import { InvestmentForm } from '../component/Form'
+
 
 const page = () => {
   return (
-    <div>page</div>
+    <InvestmentForm />
   )
 }
 
