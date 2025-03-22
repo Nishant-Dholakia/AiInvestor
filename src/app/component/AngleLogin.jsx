@@ -11,7 +11,6 @@ export default function AngleLogin() {
 
   const handleLogin = async () => {
     setLoading(true);
-    // Redirect to Angel One login page
     window.location.href = LOGIN_URL;
   };
 
