@@ -1,8 +1,4 @@
-export async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method Not Allowed" });
-  }
-
+export async function POST(req, res) {
   const { request_token } = req.body;
 
   try {
