@@ -2,26 +2,76 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-
-import { useAuth } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AngleLogin from "./AngleLogin";
 
 export function HomePage() {
-  const { isSignedIn } = useAuth();
-  const router = useRouter();
+  const [profileData, setProfileData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (isSignedIn) {
-      router.push("/dashboard");
-    }
-  }, [isSignedIn]);
+    const fetchProfile = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      console.log(urlParams);
+      const requestToken = urlParams.get("auth_token");
+      console.log(requestToken + " is ")
+
+      if (requestToken) {
+        setLoading(true);
+        try {
+          // Step 1: Exchange request_token for access_token
+          const authResponse = await fetch("/api/auth", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ request_token: requestToken }),
+          });
+
+          const authData = await authResponse.json();
+          console.log("authdata is ", authData)
+
+          if (authData.access_token) {
+            // Step 2: Fetch profile data using access_token
+            const profileResponse = await fetch("/api/profile", {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${authData.access_token}`,
+              },
+            });
+
+            const profileData = await profileResponse.json();
+            console.log("data from backend ", profileData)
+            setProfileData(profileData);
+          }
+        } catch (error) {
+          console.error("Error fetching profile:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   return (
     <>
       <div
         className="relative mx-auto my-10 flex max-w-7xl flex-col items-center justify-center">
         <Navbar />
+        <div className="px-4 py-10 md:py-20">
+          {loading ? (
+            <p>Loading profile data...</p>
+          ) : profileData ? (
+            <div>
+              <h2>Profile Data</h2>
+              <pre>{JSON.stringify(profileData, null, 2)}</pre>
+            </div>
+          ) : (
+            <AngleLogin />
+          )}
+        </div>
         <div
           className="absolute inset-y-0 left-0 h-full w-px dark:bg-neutral-800/80">
           <div
@@ -137,9 +187,7 @@ const Navbar = () => {
         <h1 className="text-base font-bold md:text-2xl">Aceternity UI</h1>
       </div>
 
-      <div className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-        <AngleLogin />
-      </div>
+      
     </nav>
     
   );
