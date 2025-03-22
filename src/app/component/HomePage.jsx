@@ -12,7 +12,9 @@ export function HomePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       const urlParams = new URLSearchParams(window.location.search);
+      console.log(urlParams);
       const requestToken = urlParams.get("request_token");
+      console.log(requestToken + " is ")
 
       if (requestToken) {
         setLoading(true);
