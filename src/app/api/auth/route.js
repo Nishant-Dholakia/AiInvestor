@@ -1,4 +1,4 @@
-export  async function handler(req, res) {
+export async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
@@ -6,7 +6,8 @@ export  async function handler(req, res) {
   const { request_token } = req.body;
 
   try {
-    const response = await fetch("https://apiconnect.angelbroking.com/rest/auth/angelbroking/user/v1/loginByRequestToken", {
+
+    const authResponse = await fetch("https://apiconnect.angelbroking.com/rest/auth/angelbroking/user/v1/loginByRequestToken", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,12 +18,27 @@ export  async function handler(req, res) {
       }),
     });
 
-    const data = await response.json();
+    const authData = await authResponse.json();
 
-    if (data.status) {
-      return res.status(200).json({ access_token: data.data.jwtToken });
+    if (!authData.status) {
+      return res.status(400).json({ message: "Login Failed", error: authData });
+    }
+
+    const access_token = authData.data.jwtToken;
+    const profileResponse = await fetch("https://apiconnect.angelbroking.com/rest/secure/angelbroking/user/v1/getProfile", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const profileData = await profileResponse.json();
+
+    if (profileData.status) {
+      return res.status(200).json({ profile: profileData.data });
     } else {
-      return res.status(400).json({ message: "Login Failed", error: data });
+      return res.status(400).json({ message: "Failed to fetch profile", error: profileData });
     }
   } catch (error) {
     return res.status(500).json({ message: "Server Error", error: error.message });
