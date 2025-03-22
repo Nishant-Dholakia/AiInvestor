@@ -19,19 +19,6 @@ export function InvestmentForm() {
     panic: "",
   });
   const handleClick = () => {
-    const formData = {
-      returnData: 12.5,
-      sharpe: 0.8,
-      drawdown: 30,
-      beta: 1.2,
-      exposure: 20,
-      winLoss: 1.2,
-      riskReward: 1.5,
-      holdingPeriod: 90,
-      fomo: 15,
-      panic: 20
-    };
-  
     fetch('http://localhost:3000/api/advisor', {
       method: 'POST',
       body: JSON.stringify(formData),  // Make sure this is stringified JSON
