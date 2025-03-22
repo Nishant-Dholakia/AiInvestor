@@ -48,6 +48,6 @@ export async function POST(req) {
       return NextResponse.json({ message: "Failed to fetch profile", error: profileData });
     }
   } catch (error) {
-    return NextResponse.json.json({ message: "Server Error", error: error.message });
+    return NextResponse.json({ message: "Server Error", error: error.message });
   }
 }
