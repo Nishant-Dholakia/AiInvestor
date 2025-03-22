@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  const { request_token } = req.body;
-  console.log("token is " , request_token);
   try {
+    const { request_token } = await req.json(); // Fix request body parsing
+    console.log("Token is:", request_token);
 
     const authResponse = await fetch("https://apiconnect.angelbroking.com/rest/auth/angelbroking/user/v1/loginByRequestToken", {
       method: "POST",
@@ -17,37 +17,33 @@ export async function POST(req) {
     });
 
     const authData = await authResponse.json();
-
-    console.log("api data is : " , authData);
+    console.log("API data is:", authData);
 
     if (!authData.status) {
-      return res.status(400).json({ message: "Login Failed", error: authData });
+      return NextResponse.json({ message: "Login Failed", error: authData }, { status: 400 });
     }
 
     const access_token = authData.data.jwtToken;
-    console.log(access_token)
+    console.log("Access Token:", access_token);
 
     const profileResponse = await fetch("https://apiconnect.angelbroking.com/rest/secure/angelbroking/user/v1/getProfile", {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${access_token}`,
+        Authorization: `Bearer ${access_token}`,
         "Content-Type": "application/json",
       },
     });
 
-    console.log("profile response is ", profileResponse);
-
-
-    const profileData = await profileResponse.json();
-    console.log("profile data is ", profileData);
+    const profileData = await profileResponse.json(); // Fix missing JSON parsing
+    console.log("Profile Data:", profileData);
 
     if (profileData.status) {
-      console.log("profile data is ", profileData);
       return NextResponse.json({ profile: profileData.data });
     } else {
-      return NextResponse.json({ message: "Failed to fetch profile", error: profileData });
+      return NextResponse.json({ message: "Failed to fetch profile", error: profileData }, { status: 400 });
     }
   } catch (error) {
-    return NextResponse.json({ message: "Server Error", error: error.message });
+    console.error("Server Error:", error);
+    return NextResponse.json({ message: "Server Error", error: error.message }, { status: 500 });
   }
 }
