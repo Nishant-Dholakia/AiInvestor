@@ -7,7 +7,7 @@ import { cn } from "@/app/lib/utils";
 
 export function InvestmentForm() {
   const [formData, setFormData] = useState({
-    return: "",
+    returnData: "",
     sharpe: "",
     drawdown: "",
     beta: "",
@@ -18,7 +18,17 @@ export function InvestmentForm() {
     fomo: "",
     panic: "",
   });
-
+  const handleClick= ()=>{
+    fetch('http://localhost:3000/api/advisor', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data));
+  }
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -68,6 +78,7 @@ export function InvestmentForm() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-full md:col-span-2 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md transition-all duration-300"
+          onClick={handleClick}
           type="submit"
         >
           Analyze Portfolio →
