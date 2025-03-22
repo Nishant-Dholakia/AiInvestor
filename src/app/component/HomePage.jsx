@@ -2,12 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from '@clerk/nextjs'
 
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";

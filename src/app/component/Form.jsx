@@ -65,7 +65,7 @@ export function InvestmentForm() {
 
       <form className="my-6 grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
         {[ 
-          { label: "Portfolio Return (%)", name: "return", placeholder: "e.g., 10%" },
+          { label: "Portfolio Return (%)", name: "returnData", placeholder: "e.g., 10%" },
           { label: "Sharpe Ratio", name: "sharpe", placeholder: "e.g., 1.3" },
           { label: "Maximum Drawdown (%)", name: "drawdown", placeholder: "e.g., 25%" },
           { label: "Beta (Market Sensitivity)", name: "beta", placeholder: "e.g., 1.1" },
