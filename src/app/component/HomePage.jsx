@@ -13,7 +13,7 @@ export function HomePage() {
     const fetchProfile = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       console.log(urlParams);
-      const requestToken = urlParams.get("request_token");
+      const requestToken = urlParams.get("auth_token");
       console.log(requestToken + " is ")
 
       if (requestToken) {
