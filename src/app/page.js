@@ -6,7 +6,7 @@ import { InvestmentForm } from './component/Form'
 function page() {
   return (
     <>
-      <InvestmentForm />
+      <HomePage />
     </>
   )
 }
