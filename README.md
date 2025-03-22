@@ -1,8 +1,13 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# 🚀 **AiInvestor**
 
-First, run the development server:
+AiInvestor is a cutting-edge **Next.js application** designed to deliver **AI-powered financial insights** and tools. With the power of APIs, it fetches and analyzes stock market data, calculates financial metrics, and provides personalized portfolio advice using advanced AI models. 
+
+---
+
+## 🛠 **Getting Started**
+
+To launch the development server:
 
 ```bash
 npm run dev
@@ -14,23 +19,89 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📊 **API Endpoints**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **1. Book Value Per Share**
+- **Endpoint:** `/api/bookpervalue`
+- **Method:** `GET`
+- **Response Example:**
+```json
+{
+  "message": "25.34"
+}
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+### **2. Live Stock Price**
+- **Endpoint:** `/api/liveprice`
+- **Method:** `GET`
+- **Response Example:**
+```json
+{
+  "c": 150.23,
+  "h": 152.00,
+  "l": 148.50,
+  "o": 149.00,
+  "pc": 148.00
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **3. P/E Ratio**
+- **Endpoint:** `/api/peratio`
+- **Method:** `GET`
+- **Response Example:**
+```json
+{
+  "message": "18.75"
+}
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### **4. Earnings Per Share (EPS)**
+- **Endpoint:** `/api/eps`
+- **Method:** `GET`
+- **Response Example:**
+```json
+{
+  "message": "5.12"
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+### **5. Portfolio Advisor**
+- **Endpoint:** `/api/advisor`
+- **Method:** `POST`
+- **Request Example:**
+```json
+{
+  "returnData": "12.5",
+  "sharpe": "1.2",
+  "drawdown": "10",
+  "beta": "0.8",
+  "exposure": "20",
+  "winLoss": "2.5",
+  "riskReward": "1.8",
+  "holdingPeriod": "30",
+  "fomo": "5",
+  "panic": "3"
+}
+```
+- **Response Example:**
+```json
+[
+  {
+    "advice": "Diversify your portfolio to reduce single stock exposure."
+  },
+  {
+    "advice": "Consider increasing your holding period for better returns."
+  }
+]
+```
+
