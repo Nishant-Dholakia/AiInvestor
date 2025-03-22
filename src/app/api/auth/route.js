@@ -1,4 +1,6 @@
-export async function POST(req, res) {
+import { NextResponse } from "next/server";
+
+export async function POST(req) {
   const { request_token } = req.body;
   console.log("token is " , request_token);
   try {
@@ -41,11 +43,11 @@ export async function POST(req, res) {
 
     if (profileData.status) {
       console.log("profile data is ", profileData);
-      return res.status(200).json({ profile: profileData.data });
+      return NextResponse.json({ profile: profileData.data });
     } else {
-      return res.status(400).json({ message: "Failed to fetch profile", error: profileData });
+      return NextResponse.json({ message: "Failed to fetch profile", error: profileData });
     }
   } catch (error) {
-    return res.status(500).json({ message: "Server Error", error: error.message });
+    return NextResponse.json.json({ message: "Server Error", error: error.message });
   }
 }
