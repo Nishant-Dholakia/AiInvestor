@@ -27,6 +27,7 @@ export function HomePage() {
           });
 
           const authData = await authResponse.json();
+          console.log("authdata is ", authData)
 
           if (authData.access_token) {
             // Step 2: Fetch profile data using access_token
@@ -38,6 +39,7 @@ export function HomePage() {
             });
 
             const profileData = await profileResponse.json();
+            console.log("data from backend ", profileData)
             setProfileData(profileData);
           }
         } catch (error) {
