@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Label } from "./ui/Lable";
 import { Input } from "./ui/Input";
 import { cn } from "@/app/lib/utils";
-import { AdviceCard } from "./AdviceCard";
+import { adviceData } from "../data/advice";
 
 export function InvestmentForm() {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ export function InvestmentForm() {
   
     await fetch('http://localhost:3000/api/advisor', {
       method: 'POST',
-      body: JSON.stringify(formData),  // Make sure this is stringified JSON
+      body: JSON.stringify(adviceData.advice),  // Make sure this is stringified JSON
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'  // Proper header for JSON
       }

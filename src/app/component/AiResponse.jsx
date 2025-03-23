@@ -2,6 +2,7 @@
 
 import {react,useState,useEffect} from 'react'
 import getDummyData from '../api/dummyData'
+// import { Audio } from 'react-loader-spinner'
 import { AdviceCard } from "./AdviceCard";
 
 export function ResponseData()
@@ -64,7 +65,13 @@ export function ResponseData()
       ))}
     </div>
   ) : (
-    <div></div>
+    <Audio
+      height="80"
+      width="80"
+      radius="9"
+      color="lime"
+      ariaLabel="loading"
+    />
   )}
 </div>
 
