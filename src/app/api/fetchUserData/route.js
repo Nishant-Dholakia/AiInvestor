@@ -19,9 +19,12 @@ export async function GET(request) {
           Authorization: `Bearer ${authToken}`,
           "Content-Type": "application/json",
           "Accept": "application/json",
+          "X-PrivateKey": `${process.env.NEXT_PUBLIC_PUBLISHER_KEY}`,
         },
       }
+
     );
+    console.log("Response from Angel One API:", response);
 
     if (response.ok) {
       const data = await response.json();
