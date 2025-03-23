@@ -58,7 +58,7 @@ export function SidebarDemo() {
         "mx-auto flex w-full max-w-7xl flex-1 flex-col overflow-hidden rounded-md  md:flex-row  z-11",
         // for your use case, use `h-screen` instead of `h-[60vh]`
         "h-screen",
-        "fixed left-0 top-0 h-full w-[20vw] "
+        "fixed left-0 top-0 h-full w-[20vw] z-[99]"
       )}>
       <Sidebar open={open} setOpen={setOpen} >
         <SidebarBody className="justify-between gap-10">
@@ -95,7 +95,7 @@ export function SidebarDemo() {
 export const Logo = () => {
   return (
     <Link
-      href="#"
+      href="/"
       className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black">
       <div
         className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
@@ -103,7 +103,7 @@ export const Logo = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="font-medium whitespace-pre text-black dark:text-white">
-        FinAdvisior
+        Acet Labs
       </motion.span>
     </Link>
   );
