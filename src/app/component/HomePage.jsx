@@ -87,7 +87,7 @@ const ThreeDScroll = ({ direction }) => {
   const x = useTransform(
     scrollYProgress,
     [0, 1],
-    direction === "right" ? ["30vw", "10vw"] : ["-50vw", "0"]
+    direction === "right" ? ["40vw", "0vw"] : ["-40vw", "0vw"]
   );
 
   return (
