@@ -18,7 +18,7 @@ export default function AngleLogin() {
     <button
       onClick={handleLogin}
       disabled={loading}
-      className="w-full transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+      className="rounded-lg bg-violet-600 px-6 py-3 text-white hover:bg-violet-700"
     >
       {loading ? "Logging in..." : "Login with Angel One"}
     </button>
