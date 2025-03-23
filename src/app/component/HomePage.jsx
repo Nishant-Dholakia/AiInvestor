@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
@@ -11,7 +12,44 @@ import AngleLogin from "./AngleLogin";
 import { HoverEffect } from "./ui/CardHoverEffect";
 
 export function HomePage() {
+
+  async function fetchUserData(authToken) {
+    try {
+      const response = await fetch("/api/fetchUserData", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+
   const [vantaEffect, setVantaEffect] = useState(null);
+  const router = useRouter();
+  useEffect(() => {
+    // Extract the auth_token from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const authToken = urlParams.get("auth_token");
+
+    if (authToken) {
+      // Store the auth_token in localStorage or state management
+      localStorage.setItem("angelOneAuthToken", authToken);
+      console.log("Auth token found in URL:", authToken);
+      fetchUserData(authToken);
+      // Redirect to the dashboard or another page
+      // router.push("/dashboard");
+    } else {
+      // Handle error case where auth_token is not present
+      console.error("Auth token not found in URL");
+      router.push("/");
+    }
+  }, [router]);
 
   const vantaContainerRef = useCallback(
     (node) => {

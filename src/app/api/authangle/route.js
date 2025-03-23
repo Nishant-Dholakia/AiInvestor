@@ -1,6 +1,6 @@
 import { SmartConnect } from "smartapi-nodejs";
 
-export default async function handler(req, res) {
+export async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const api_key = process.env.ANGEL_ONE_API_KEY; 
+    const api_key = process.env.PUBLISHER_KEY; 
 
     const obj = new SmartConnect({ api_key });
     obj.setAccessToken(authToken);

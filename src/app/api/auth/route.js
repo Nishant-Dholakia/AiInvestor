@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-
+import axios from 'axios';
 export async function POST(req) {
   try {
     const { request_token } = await req.json();
@@ -96,5 +96,30 @@ export async function POST(req) {
       { message: "Server Error", error: error.message },
       { status: 500 }
     );
+  }
+}
+
+
+
+export  async function GET(req) {
+  const { authToken } = req.query;
+
+  if (!authToken) {
+    return res.status(400).json({ error: 'Auth token is required' });
+  }
+
+  try {
+    const response = await axios.get('https://apiconnect.angelbroking.com/rest/secure/angelbroking/user/v1/getProfile', {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    });
+
+    NextResponse.json(response.data);
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    NextResponse.json({ error: 'Failed to fetch user profile' });
   }
 }
