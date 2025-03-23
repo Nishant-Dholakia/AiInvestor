@@ -4,6 +4,7 @@ import { Paperclip, Send, PlusCircle, MessageSquare, Trash2, Edit2 } from "lucid
 import { motion } from "framer-motion";
 import axios from "axios";
 import { BackgroundLines } from "@/app/component/ui/BackgroundLines";
+import ReactMarkdown from "react-markdown";
 
 const Chatbot = () => {
   const [activeChat, setActiveChat] = useState("default");
@@ -274,7 +275,8 @@ const Chatbot = () => {
                       : "bg-gradient-to-r from-zinc-700 to-zinc-800"
                     }`}
                 >
-                  {msg.text}
+                  {/* {msg.text} */}
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
                   {msg.file && (
                     <div className="mt-2 p-2 bg-zinc-800 rounded text-xs flex items-center gap-1">
                       <Paperclip size={12} />

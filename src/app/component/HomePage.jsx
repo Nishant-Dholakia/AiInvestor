@@ -35,20 +35,7 @@ export function HomePage() {
   useEffect(() => {
     // Extract the auth_token from the URL
     const urlParams = new URLSearchParams(window.location.search);
-    const authToken = urlParams.get("auth_token");
-
-    if (authToken) {
-      // Store the auth_token in localStorage or state management
-      localStorage.setItem("angelOneAuthToken", authToken);
-      console.log("Auth token found in URL:", authToken);
-      fetchUserData(authToken);
-      // Redirect to the dashboard or another page
-      // router.push("/dashboard");
-    } else {
-      // Handle error case where auth_token is not present
-      console.error("Auth token not found in URL");
-      router.push("/");
-    }
+    
   }, [router]);
 
   const vantaContainerRef = useCallback(
