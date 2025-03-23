@@ -27,8 +27,7 @@ export async function POST(req) {
       FOMO Trades: ${fomo_trades}%
       Panic Selling: ${panic_selling}%    
   
-      The following is the portfolio performance for a person. Provide advice related to it in JSON format with an array of advice objects. Output JSON only, nothing else. Don't write variables syntax in the answer, just write the absolute value for each parameter.
-      `;
+      The following is the portfolio performance for a person. Provide advice related to it in JSON format with an array of advice objects. Output JSON only, nothing else. Don't write variables syntax in the answer, just write the absolute value for each parameter. give advice and metric as parameters nothing more. give array of objects only`;
   
       let result = (await model.generateContent(prompt)).response.text();
       result = result.trim();
