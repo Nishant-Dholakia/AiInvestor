@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
@@ -12,6 +13,24 @@ import { HoverEffect } from "./ui/CardHoverEffect";
 
 export function HomePage() {
   const [vantaEffect, setVantaEffect] = useState(null);
+  const router = useRouter();
+  useEffect(() => {
+    // Extract the auth_token from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const authToken = urlParams.get("auth_token");
+
+    if (authToken) {
+      // Store the auth_token in localStorage or state management
+      localStorage.setItem("angelOneAuthToken", authToken);
+
+      // Redirect to the dashboard or another page
+      router.push("/dashboard");
+    } else {
+      // Handle error case where auth_token is not present
+      console.error("Auth token not found in URL");
+      router.push("/");
+    }
+  }, [router]);
 
   const vantaContainerRef = useCallback(
     (node) => {

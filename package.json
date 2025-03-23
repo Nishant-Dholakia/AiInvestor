@@ -32,7 +32,8 @@
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.2",
     "three": "^0.174.0",
-    "vanta": "^0.5.24"
+    "vanta": "^0.5.24",
+    "yahoo-finance2": "^2.13.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
