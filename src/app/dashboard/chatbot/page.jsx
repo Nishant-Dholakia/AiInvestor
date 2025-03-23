@@ -1,13 +1,15 @@
-"use state"
+"use client"
 import { useState, useEffect } from "react";
-import { Navbar } from "../Components/Nav";
 import { Paperclip, Send, PlusCircle, MessageSquare, Trash2, Edit2 } from "lucide-react";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { BackgroundLines } from "@/app/component/ui/BackgroundLines";
 
 const Chatbot = () => {
   const [activeChat, setActiveChat] = useState("default");
-  const [allChats, setAllChats] = useState([]);
+  const [allChats, setAllChats] = useState({
+    default: [{ text: "Hello! How can I help you today?", sender: "bot" }]
+  });
 
   const [loader, setLoader] = useState(false);
   const [input, setInput] = useState("");
@@ -23,7 +25,8 @@ const Chatbot = () => {
 
 
   async function apicall(userInput) {
-    
+    const response = await axios.post("/api/chatbot", { prompt: userInput });
+    return response.data.data;
   }
 
   
@@ -115,7 +118,11 @@ const Chatbot = () => {
     setFile(null);
 
     const data = await apicall(input);
-
+    const botMessages = [...messages, { text: data, sender: "bot" }];
+    setAllChats(prev => ({
+      ...prev,
+      [activeChat]: botMessages
+    }));
     setAllChats(prev => ({
       ...prev,
       [activeChat]: [...newMessages, { text: data, sender: "bot" }]
@@ -141,7 +148,6 @@ const Chatbot = () => {
 
   return (
     <div className="bg-zinc-950 h-screen flex flex-col items-center justify-center relative overflow-hidden">
-      <Navbar />
       <BackgroundLines className="bg-zinc-950 absolute inset-0" />
 
       <div className="z-20 w-full max-w-6xl h-[80vh] flex relative mt-16">
