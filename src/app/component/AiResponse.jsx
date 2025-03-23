@@ -13,9 +13,10 @@ export function ResponseData()
     const handleClick = async () => {
         console.log('calling api')
       let api_data = getDummyData()
+      console.log('fetching: ',api_data['portfolio']['performance_metrics'])
         await fetch('http://localhost:3000/api/advisor', {
           method: 'POST',
-          body: JSON.stringify(api_data),  // Make sure this is stringified JSON
+          body: JSON.stringify(api_data['portfolio']['performance_metrics']),  // Make sure this is stringified JSON
           headers: {
             'Content-Type': 'application/json; charset=UTF-8'  // Proper header for JSON
           }
