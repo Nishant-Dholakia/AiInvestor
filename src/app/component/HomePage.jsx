@@ -6,6 +6,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
 import HALO from "vanta/dist/vanta.halo.min";
 
+import AngleLogin from "./AngleLogin";
+import { HoverEffect } from "./ui/CardHoverEffect";
+
 export function HomePage() {
   const [vantaEffect, setVantaEffect] = useState(null);
 
@@ -40,14 +43,15 @@ export function HomePage() {
       <div className="relative z-10 flex flex-col items-center justify-center min-h-[300vh]">
         <Navbar />
         <HeroSection />
-        <ThreeDScroll />
-        <ThreeDScrollLeft />
+        <ThreeDScroll direction="right" />
+        <ThreeDScroll direction="left" />
         <Features />
       </div>
     </div>
   );
 }
 
+// 🔹 Hero Section
 const HeroSection = () => {
   return (
     <div className="relative mt-20 flex flex-col items-center justify-center px-4 py-10 md:py-20 text-center">
@@ -67,9 +71,7 @@ const HeroSection = () => {
         transition={{ duration: 0.3, delay: 1 }}
         className="mt-8 flex flex-wrap items-center justify-center gap-4"
       >
-        <button className="rounded-lg bg-violet-600 px-6 py-3 text-white hover:bg-violet-700">
-          Get Started
-        </button>
+        <AngleLogin />
         <button className="rounded-lg border border-violet-500 px-6 py-3 text-white hover:bg-violet-600">
           Learn More
         </button>
@@ -78,83 +80,86 @@ const HeroSection = () => {
   );
 };
 
-const ThreeDScroll = () => {
+const ThreeDScroll = ({ direction }) => {
   const { scrollYProgress } = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1.5]);
-  const x = useTransform(scrollYProgress, [0, 1], ["100vw", "0vw"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1.2]);
+  const opacity = useTransform(scrollYProgress, [0.1, 0.9], [0, 1]);
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    direction === "right" ? ["30vw", "10vw"] : ["-50vw", "0"]
+  );
 
   return (
-    <div className="relative z-10 mt-20 flex w-full items-center justify-end h-[80vh] bg-transparent overflow-hidden">
+    <div className="relative z-10 mt-20 flex w-full items-center justify-center h-[100vh] bg-transparent overflow-hidden">
       <motion.div
-        style={{ scale, x }}
-        className="relative flex h-80 w-96 items-center justify-center rounded-lg bg-black shadow-lg"
+        style={{ scale, x, opacity }}
+        className="relative flex h-96 min-w-[30rem] items-center justify-center rounded-xl bg-black shadow-lg"
       >
-        <Image
+        <img
           src="/dashboard-screenshot.png"
           alt="Dashboard Screenshot"
-          className="h-full w-full rounded-lg"
-          layout="fill"
-          objectFit="cover"
+          className="h-full w-full rounded-xl"
+          width={"100%"}
+          // layout="fill"
+          // objectFit="cover"
         />
       </motion.div>
     </div>
   );
 };
 
-const ThreeDScrollLeft = () => {
-  const { scrollYProgress } = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1.5]);
-  const x = useTransform(scrollYProgress, [0, 1], ["-100vw", "0vw"]);
-
-  return (
-    <div className="relative z-10 mt-20 flex w-full items-center justify-start h-[80vh] bg-transparent overflow-hidden">
-      <motion.div
-        style={{ scale, x }}
-        className="relative flex h-80 w-96 items-center justify-center rounded-lg bg-black shadow-lg"
-      >
-        <Image
-          src="/dashboard-screenshot.png"
-          alt="Dashboard Screenshot"
-          className="h-full w-full rounded-lg"
-          layout="fill"
-          objectFit="cover"
-        />
-      </motion.div>
-    </div>
-  );
-};
-
+// 🔹 Features Section
+const FeaturesArray = [
+  {
+    title: "AI-Based Investment Insights",
+    description:
+      "Get real-time AI-driven investment advice based on stock trends.",
+      link : "#in"
+  },
+  {
+    title: "Live Stock Data",
+    description:
+      "Track real-time stock prices, P/E ratios, and earnings per share.",
+      link : "#data"
+  },
+  {
+    title: "Automated Portfolio Management",
+    description:
+      "Auto-manage your stock portfolio with AI-powered buy/sell signals.",
+      link : "#pro"
+  },
+  {
+    title: "Angel One",
+    description:
+      "Integrates brokerage APIs (Angel One, Groww, etc.).",
+    link: "#one",
+  },
+  {
+    title: "Deep Stock Analysis",
+    description:
+      "Analyzes portfolios for risk, diversification, and returns.",
+    link: "#analysis",
+  },
+  {
+    title: "Regulatory Compliance",
+    description:
+      "Ensures regulatory compliance (SEBI, RBI)",
+    link: "#compliance",
+  },
+]
 const Features = () => {
   return (
     <div className="relative z-10 mt-20 w-full px-4 py-20 bg-transparent">
       <h2 className="text-4xl font-bold text-white text-center mb-10">Features</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Feature 1 */}
-        <div className="bg-black/50 p-6 rounded-lg shadow-lg">
-          <h3 className="text-2xl font-bold text-violet-500">Feature 1</h3>
-          <p className="mt-4 text-white">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </div>
-        {/* Feature 2 */}
-        <div className="bg-black/50 p-6 rounded-lg shadow-lg">
-          <h3 className="text-2xl font-bold text-violet-500">Feature 2</h3>
-          <p className="mt-4 text-white">
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </p>
-        </div>
-        {/* Feature 3 */}
-        <div className="bg-black/50 p-6 rounded-lg shadow-lg">
-          <h3 className="text-2xl font-bold text-violet-500">Feature 3</h3>
-          <p className="mt-4 text-white">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          </p>
-        </div>
-      </div>
+      <div className="max-w-5xl mx-auto px-8">
+      <HoverEffect items={FeaturesArray} />
+    </div>
     </div>
   );
 };
 
+// 🔹 Navbar
 const Navbar = () => {
   return (
     <nav className="flex w-full items-center justify-between bg-transparent px-4 py-4">
