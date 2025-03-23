@@ -2,7 +2,6 @@
 
 import {react,useState,useEffect} from 'react'
 import getDummyData from '../api/dummyData'
-import { Audio } from 'react-loader-spinner'
 import { AdviceCard } from "./AdviceCard";
 
 export function ResponseData()
@@ -11,19 +10,30 @@ export function ResponseData()
     const [showFirst, setShowFirst] = useState(false);
     
     const handleClick = async () => {
-        console.log('calling api')
-      let api_data = getDummyData()
-        await fetch('http://localhost:3000/api/advisor', {
+      console.log('Calling API...');
+      const api_data = getDummyData()['portfolio']['performance_metrics'];
+      
+      try {
+        const res = await fetch('http://localhost:3000/api/advisor', {
           method: 'POST',
-          body: JSON.stringify(api_data),  // Make sure this is stringified JSON
+          body: JSON.stringify(api_data),  // Ensure JSON encoding
           headers: {
-            'Content-Type': 'application/json; charset=UTF-8'  // Proper header for JSON
-          }
-        })
-        .then(res => res.json())
-        .then(data => setApiData(Array.isArray(data) ? data : []))
-        .catch(error => console.error("Fetch error:", error));
-      };
+            'Content-Type': 'application/json; charset=UTF-8',  // Proper JSON header
+          },
+        });
+    
+        if (!res.ok) {
+          console.error("API call failed with status:", res.status);
+          return;
+        }
+    
+        const data = await res.json();
+        console.log("API Response Data:", data);
+        setApiData(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
     
       const handleClickDemo = ()=> {
         handleClick()
@@ -54,13 +64,7 @@ export function ResponseData()
       ))}
     </div>
   ) : (
-    <Audio
-      height="80"
-      width="80"
-      radius="9"
-      color="lime"
-      ariaLabel="loading"
-    />
+    <div></div>
   )}
 </div>
 
