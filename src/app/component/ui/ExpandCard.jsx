@@ -17,7 +17,7 @@ export function ExpandableCardDemo() {
         const api_data = getDummyData()['portfolio']['performance_metrics'];
         
         try {
-          const res = await fetch('http://localhost:3000/api/advisor', {
+          const res = await fetch('/api/advisor', {
             method: 'POST',
             body: JSON.stringify(api_data),  // Ensure JSON encoding
             headers: {
