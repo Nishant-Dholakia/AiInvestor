@@ -1,10 +1,9 @@
 import React from 'react'
-import Dashboard from './component/ui/Dashboard'
-import { HomePage } from './component/HomePage'
+import Chat from "./component/Chat"
 function page() {
   return (
     <>
-      <HomePage />
+      <Chat />
     </>
   )
 }
