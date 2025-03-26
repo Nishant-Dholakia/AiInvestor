@@ -1,34 +1,41 @@
-// app/api/fetchUserData/route.js
+
+import axios from "axios";
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
-  // Extract the auth token from the Authorization header
   const authToken = request.headers.get("authorization")?.split(" ")[1];
 
   if (!authToken) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  
+
+
+  const profile = 'https://apiconnect.angelone.in/rest/secure/angelbroking/user/v1/getProfile'
+  
+  var data = ''
+
   try {
-    // Fetch user data from Angel One's API
-    const response = await fetch(
-      "https://apiconnect.angelbroking.com/rest/secure/angelbroking/user/v1/getProfile",
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "X-PrivateKey": `${process.env.NEXT_PUBLIC_PUBLISHER_KEY}`,
-        },
-      }
-
-    );
-    console.log("Response from Angel One API:", response);
-
-    if (response.ok) {
-      const data = await response.json();
-      return NextResponse.json(data, { status: 200 });
+    const config = {
+      method: 'get',
+      url: profile,
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-PrivateKey': process.env.NEXT_PUBLIC_PUBLISHER_KEY,
+        'X-SourceID': 'WEB',
+        'X-MACAddress': '00:1A:2B:3C:4D:5E',
+      },
+      data : data
+    };
+    
+    const response = await axios(config); 
+    console.log(response.data);
+    if (response.data && response.data.status) {
+      
+      return NextResponse.json(response.data, { status: 200 });
     } else {
       return NextResponse.json(
         { error: "Failed to fetch user data" },

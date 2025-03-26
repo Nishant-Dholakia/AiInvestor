@@ -11,14 +11,15 @@ import { useEffect, useState } from "react";
 const Dashboard = ({ portfolioData }) => {
   const [userData, setUserData] = useState(null);
 
+
   useEffect(() => {
     const authToken = localStorage.getItem("angelOneAuthToken");
 
     if (authToken) {
       fetchUserData(authToken);
     } else {
-      console.error("Auth token not found");
-      window.location.href = "/";
+      console.log("Auth token not found");
+      // window.location.href = "/";
     }
   }, []);
   const fetchUserData = async (authToken) => {
@@ -27,8 +28,7 @@ const Dashboard = ({ portfolioData }) => {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${authToken}`,
-          'Accept': "application/json",
-          "X-PrivateKey": `${process.env.PUBLISHER_KEY}`,
+          
         },
       });
 

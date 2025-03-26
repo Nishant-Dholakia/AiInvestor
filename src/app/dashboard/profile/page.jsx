@@ -2,8 +2,40 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { userData } from "@/app/data/user";
+import { useEffect, useState } from "react";
 
 const ProfilePage = ({ userProfile }) => {
+
+  const [authToken, setauthToken] = useState(null)
+  const [user, setuser] = useState({})
+  async function fetchUserData() {
+    
+    try {
+      console.log(authToken)
+      const response = await fetch("/api/fetchUserData", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          
+        },
+      });
+      const data = await response.json();
+      console.log(data.data);
+      setuser(data.data)
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  }
+
+
+  useEffect(()=>{
+    setauthToken(window.localStorage.getItem("token"))
+    async function main(){
+      await fetchUserData()
+    }
+    main()
+  },[authToken])
   return (
     <div className="min-h-[90vh] flex items-center justify-end bg-gray-950 text-white p-6">
       {/* Profile Container */}
@@ -16,9 +48,9 @@ const ProfilePage = ({ userProfile }) => {
         {/* Profile Details */}
         <div className="flex-1">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">
-            {userProfile.name}
+            {user ? user.name : userProfile.name}
           </h1>
-          <p className="text-gray-400 mt-2">{userProfile.email}</p>
+          <p className="text-gray-400 mt-2">{user ? user.email : userProfile.email}</p>
 
           {/* Fields in a Single Row */}
           <div className="mt-6 grid grid-cols-2 gap-4">
